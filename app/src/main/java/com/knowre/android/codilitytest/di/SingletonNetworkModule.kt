@@ -2,6 +2,7 @@ package com.knowre.android.codilitytest.di
 
 import com.google.gson.Gson
 import com.knowre.android.codilitytest.BuildConfig
+import com.knowre.android.codilitytest.http.ImageApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +51,11 @@ internal interface SingletonNetworkModule {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(Gson()))
                 .build()
+        }
+
+        @Provides
+        fun provideApi(retrofit: Retrofit): ImageApi {
+            return retrofit.create(ImageApi::class.java)
         }
     }
 }
