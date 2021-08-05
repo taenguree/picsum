@@ -1,5 +1,7 @@
 package com.knowre.android.codilitytest.base
 
+import android.util.Log
+import com.knowre.android.codilitytest.http.coroutine.CoroutineRemote
 import com.knowre.android.codilitytest.knowRedux.*
 import com.knowre.android.codilitytest.knowRedux.Action
 import com.knowre.android.codilitytest.knowRedux.MiddlewareType
@@ -9,6 +11,7 @@ import com.knowre.android.codilitytest.knowRedux.ViewStateType
 import com.knowre.android.codilitytest.knowRedux.co.CoroutineAwareKnowReduxStore
 import com.knowre.android.codilitytest.knowRedux.co.CoroutineStateObserver
 import com.knowre.android.codilitytest.navigator.NavigatorApi
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -44,6 +47,17 @@ internal abstract class BaseStateModel<VS : ViewStateType, S : ViewStateAware<VS
 
     private var scope: CoroutineScope? = null
 
+    private val exceptionHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        when (throwable) {
+            is CoroutineRemote.RetryExhaustedException -> Log.d("RetryExhaustedException", "Retry Exhausted")
+
+            else -> {
+                throwable.printStackTrace()
+                Thread.currentThread().uncaughtExceptionHandler?.uncaughtException(Thread.currentThread(), throwable)
+            }
+        }
+    }
+
     override suspend fun onNext(state: S, action: A) {
         @Suppress("UNCHECKED_CAST")
         renderer?.render(state.viewState, action)
@@ -56,7 +70,7 @@ internal abstract class BaseStateModel<VS : ViewStateType, S : ViewStateAware<VS
     }
 
     fun launch(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> Unit): Job? {
-        return scope!!.launch(context = context, block = block)
+        return scope!!.launch(context = context + exceptionHandler, block = block)
     }
 
     fun getState() = store.get()

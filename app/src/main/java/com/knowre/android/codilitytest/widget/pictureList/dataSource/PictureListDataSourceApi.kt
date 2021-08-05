@@ -7,6 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 
 internal interface PictureListDataSourceApi {
     suspend fun fetchImageList(): List<ImageEntity>
-    suspend fun fetchNextPageImageList(): List<ImageEntity>
-    fun getBitmapFetcher(scope: CoroutineScope): ImageBinder
+    suspend fun fetchNextPageImageList(): List<ImageEntity>?
+    fun getImageBinder(scope: CoroutineScope): ImageBinder
 }

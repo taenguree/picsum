@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.databinding.ViewPictureListBinding
 import com.knowre.android.codilitytest.extensions.doOnPostLayout
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
@@ -24,6 +26,10 @@ internal class PictureListView constructor(
     attrs: AttributeSet? = null
 
 ) : ConstraintLayout(context, attrs), WidgetView<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
+
+    companion object {
+        const val COLUMN_COUNT = 2
+    }
 
     private val binding = ViewPictureListBinding.inflate(LayoutInflater.from(context), this, true)
 
@@ -41,7 +47,9 @@ internal class PictureListView constructor(
 
     override fun render(state: PictureListViewState, action: PictureListRenderAction) {
         when (action) {
-            is PictureListRenderAction.AppendPictures -> post { pictureListAdapter.addStates(action.singlePictureStates) }
+            is PictureListRenderAction.AppendPictures  -> pictureListAdapter.addStates(action.singlePictureStates)
+            is PictureListRenderAction.ShowAppendToast -> if (action.isNoMorePictureExists) { resources.getString(R.string.no_more_picture_exists) } else { resources.getString(R.string.load_more_picture_success) }
+                .also { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
         }
     }
 
@@ -51,9 +59,29 @@ internal class PictureListView constructor(
 
     private fun initializeRecyclerView() {
         with(binding.rvPictures) {
-            layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(COLUMN_COUNT, RecyclerView.VERTICAL)
             adapter       = pictureListAdapter
         }
+
+        binding.rvPictures.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val lastItemPosition = (recyclerView.layoutManager as StaggeredGridLayoutManager).findLastCompletelyVisibleItemPositions(null)[0]
+
+                    val itemCount = recyclerView.adapter!!.itemCount
+
+                    if (lastItemPosition > itemCount - 10) {
+                        listener?.onAction(PictureListCallbackAction.OnAlmostScrolledToVeryBottom(itemCount))
+                    }
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
 }

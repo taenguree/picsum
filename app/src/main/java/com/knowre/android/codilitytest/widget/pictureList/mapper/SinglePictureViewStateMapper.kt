@@ -1,0 +1,29 @@
+package com.knowre.android.codilitytest.widget.pictureList.mapper
+
+import com.knowre.android.codilitytest.entity.ImageEntity
+import com.knowre.android.codilitytest.widget.singlePicture.state.ImageBinder
+import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState
+import javax.inject.Inject
+
+
+internal class SinglePictureViewStateMapper @Inject constructor() {
+
+    fun transform(imageEntity: ImageEntity, width: Int, columnCount: Int, imageBinder: ImageBinder): SinglePictureViewState {
+        val ratio = imageEntity.getRatio()
+
+        val requestedWidth  = width/columnCount
+        val requestedHeight = (requestedWidth/ratio).toInt()
+
+        return SinglePictureViewState(
+            id              = imageEntity.id,
+            width           = imageEntity.width,
+            height          = imageEntity.height,
+            requestedWidth  = requestedWidth,
+            requestedHeight = requestedHeight,
+            url             = imageEntity.downloadUrl,
+            author          = imageEntity.author,
+            imageBinder     = imageBinder
+        )
+    }
+
+}

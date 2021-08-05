@@ -11,4 +11,9 @@ internal data class ImageEntity(
     val url: String,
     @SerializedName("download_url")
     val downloadUrl: String
-)
+
+) {
+
+    fun getRatio() = width.toFloat() / height.toFloat()
+
+}

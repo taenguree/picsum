@@ -1,5 +1,6 @@
 package com.knowre.android.codilitytest.http.coroutine
 
+import android.util.Log
 import com.knowre.android.codilitytest.http.callState.CallStateListenerApi
 import com.knowre.android.codilitytest.http.retry.RetryPolicyApi
 import kotlinx.coroutines.Dispatchers
@@ -60,6 +61,7 @@ internal class CoroutineRemote @Inject constructor(
             result
         } catch (t: Throwable) {
             if (t !is RetryExhaustedException) {
+                Log.d("MY_LOG", "exception $t")
                 withRetry(call = call, currentRetryCount = currentRetryCount + 1, maxRetryCountOnFail = maxRetryCountOnFail, throwable = t, callExecutionBlock = callExecutionBlock)
             } else {
                 inProgressCalls.remove(call)

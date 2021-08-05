@@ -6,4 +6,5 @@ import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureV
 
 internal sealed class PictureListRenderAction : ViewAction {
     data class AppendPictures(val singlePictureStates: List<SinglePictureViewState>) : PictureListRenderAction()
+    data class ShowAppendToast(val isNoMorePictureExists: Boolean) : PictureListRenderAction()
 }
