@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.di.perActivity
+package com.knowre.android.codilitytest.di.perRetainedActivity
 
 import com.knowre.android.codilitytest.http.callState.CallStateListenerApi
 import com.knowre.android.codilitytest.http.coroutine.CoroutineRemote
@@ -15,8 +15,8 @@ import retrofit2.Call
 
 
 @InstallIn(ActivityRetainedComponent::class)
-@Module(includes = [PerActivityNetworkModule.ProvideModule::class])
-internal interface PerActivityNetworkModule {
+@Module(includes = [PerRetainedActivityNetworkModule.ProvideModule::class])
+internal interface PerRetainedActivityNetworkModule {
     @InstallIn(ActivityComponent::class)
     @Module
     object ProvideModule {

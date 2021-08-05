@@ -88,4 +88,6 @@ internal abstract class BaseStateModel<VS : ViewStateType, S : ViewStateAware<VS
         this.listener = listener
     }
 
+    protected fun getScope() = this.scope
+
 }

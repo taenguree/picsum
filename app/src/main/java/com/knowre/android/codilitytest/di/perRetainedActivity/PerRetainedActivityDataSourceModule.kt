@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.di.perActivity
+package com.knowre.android.codilitytest.di.perRetainedActivity
 
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSource
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSourceApi
@@ -10,8 +10,8 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 
 
 @InstallIn(ActivityRetainedComponent::class)
-@Module(includes = [PerActivityDataSourceModule.ProvideModule::class])
-internal interface PerActivityDataSourceModule {
+@Module(includes = [PerRetainedActivityDataSourceModule.ProvideModule::class])
+internal interface PerRetainedActivityDataSourceModule {
     @InstallIn(ActivityComponent::class)
     @Module
     object ProvideModule {}

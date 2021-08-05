@@ -29,7 +29,6 @@ internal interface SingletonNetworkModule {
     @Module
     object ProvideModule {
         @Provides
-        @Singleton
         fun provideOkHttpClient(): OkHttpClient {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
 
@@ -50,7 +49,7 @@ internal interface SingletonNetworkModule {
         }
 
         @Provides
-        @Singleton
+
         fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -60,13 +59,11 @@ internal interface SingletonNetworkModule {
         }
 
         @Provides
-        @Singleton
         fun provideApi(retrofit: Retrofit): ImageApi {
             return retrofit.create(ImageApi::class.java)
         }
     }
 
     @Binds
-    @Singleton
     fun provideRetryPolicy(retryPolicy: RetryPolicy): RetryPolicyApi
 }

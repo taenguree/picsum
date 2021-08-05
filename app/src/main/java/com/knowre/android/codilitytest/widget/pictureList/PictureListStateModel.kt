@@ -1,6 +1,5 @@
 package com.knowre.android.codilitytest.widget.pictureList
 
-import android.util.Log
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSourceApi
@@ -41,7 +40,8 @@ internal class PictureListStateModel @Inject constructor(
                             requestedWidth  = requestedWidth,
                             requestedHeight = requestedHeight,
                             url             = it.downloadUrl,
-                            author          = it.author
+                            author          = it.author,
+                            imageBinder     = dataSource.getBitmapFetcher(getScope()!!)
                         )
                     }
 

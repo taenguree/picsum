@@ -2,12 +2,10 @@ package com.knowre.android.codilitytest.widget.singlePicture
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.knowre.android.codilitytest.databinding.ViewSinglePictureBinding
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
 import com.knowre.android.codilitytest.widget.base.WidgetView
@@ -37,10 +35,15 @@ internal class SinglePictureView constructor(
 
         when (action) {
             is SinglePictureRenderAction.Render -> {
-                Glide.with(context)
-                    .load(action.state.url)
-                    .override(action.state.requestedWidth, action.state.requestedHeight)
-                    .into(binding.ivPicture)
+                state.imageBinder(
+                    binding.ivPicture,
+                    state.id,
+                    state.url,
+                    state.requestedWidth,
+                    state.requestedHeight,
+                    { binding.pbProgress.visibility = View.VISIBLE },
+                    { binding.pbProgress.visibility = View.GONE },
+                )
 
                 binding.tvAuthor.text = state.author
             }

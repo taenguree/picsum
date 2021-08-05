@@ -23,8 +23,6 @@ internal class MainActivity : AppCompatActivity() {
 
         viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customPictureList))
 
-        Log.d("MY_LOG", "renderer set")
-
         viewModel.onCreate(savedInstanceState)
     }
 

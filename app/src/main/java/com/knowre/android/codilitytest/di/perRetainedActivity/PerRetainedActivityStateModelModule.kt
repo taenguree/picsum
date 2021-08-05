@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.di.perActivity
+package com.knowre.android.codilitytest.di.perRetainedActivity
 
 import com.knowre.android.codilitytest.base.BaseStateModel
 import com.knowre.android.codilitytest.widget.pictureList.PictureListStateModel
@@ -13,7 +13,7 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 
 @InstallIn(ActivityRetainedComponent::class)
 @Module
-internal interface PerActivityStateModelModule {
+internal interface PerRetainedActivityStateModelModule {
     @Binds
     fun providePictureListStateModel(stateModel: PictureListStateModel): BaseStateModel<PictureListViewState, PictureListState, PictureListAction>
 }

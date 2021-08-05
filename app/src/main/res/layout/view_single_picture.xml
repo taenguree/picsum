@@ -15,6 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/purple_500"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_picture"
+        app:layout_constraintEnd_toEndOf="@+id/iv_picture"
+        app:layout_constraintStart_toStartOf="@+id/iv_picture"
+        app:layout_constraintTop_toTopOf="@+id/iv_picture" />
+
     <TextView
         android:id="@+id/tv_author"
         android:layout_width="0dp"
