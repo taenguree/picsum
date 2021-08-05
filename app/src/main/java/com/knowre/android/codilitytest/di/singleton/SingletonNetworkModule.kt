@@ -1,8 +1,11 @@
-package com.knowre.android.codilitytest.di
+package com.knowre.android.codilitytest.di.singleton
 
 import com.google.gson.Gson
 import com.knowre.android.codilitytest.BuildConfig
-import com.knowre.android.codilitytest.http.ImageApi
+import com.knowre.android.codilitytest.http.api.ImageApi
+import com.knowre.android.codilitytest.http.retry.RetryPolicy
+import com.knowre.android.codilitytest.http.retry.RetryPolicyApi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
 @InstallIn(SingletonComponent::class)
@@ -25,6 +29,7 @@ internal interface SingletonNetworkModule {
     @Module
     object ProvideModule {
         @Provides
+        @Singleton
         fun provideOkHttpClient(): OkHttpClient {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
 
@@ -45,6 +50,7 @@ internal interface SingletonNetworkModule {
         }
 
         @Provides
+        @Singleton
         fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -54,8 +60,13 @@ internal interface SingletonNetworkModule {
         }
 
         @Provides
+        @Singleton
         fun provideApi(retrofit: Retrofit): ImageApi {
             return retrofit.create(ImageApi::class.java)
         }
     }
+
+    @Binds
+    @Singleton
+    fun provideRetryPolicy(retryPolicy: RetryPolicy): RetryPolicyApi
 }

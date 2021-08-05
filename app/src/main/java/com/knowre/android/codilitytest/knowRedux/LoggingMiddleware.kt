@@ -11,7 +11,13 @@ internal open class LoggingMiddleware <T : StateType, A : Action> constructor(
 ) : LinkedMiddleware<T, A>() {
 
     override fun execute(oldState: T, newState: T, action: A) {
-        stateLogger.log(oldState, newState, action)
+        val realAction = when (action) {
+            is ViewRenderAction<*>   -> action.action
+            is ViewCallbackAction<*> -> action.action
+            else                     -> action
+        }
+
+        stateLogger.log(oldState, newState, realAction)
 
         proceed(oldState, newState, action)
     }

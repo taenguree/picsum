@@ -12,6 +12,7 @@ import com.knowre.android.codilitytest.navigator.NavigatorApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -55,7 +56,7 @@ internal abstract class BaseStateModel<VS : ViewStateType, S : ViewStateAware<VS
     }
 
     fun launch(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> Unit): Job? {
-        return scope?.launch(context = context, block = block)
+        return scope!!.launch(context = context, block = block)
     }
 
     fun getState() = store.get()

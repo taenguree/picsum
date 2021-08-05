@@ -5,6 +5,6 @@ import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureV
 
 
 internal data class PictureListViewState(
-    val pictures: List<SinglePictureViewState>
+    val pictures: List<SinglePictureViewState> = listOf()
 
 ) : ViewStateType

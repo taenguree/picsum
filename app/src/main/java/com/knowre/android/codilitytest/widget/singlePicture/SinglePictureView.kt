@@ -39,11 +39,7 @@ internal class SinglePictureView constructor(
             is SinglePictureRenderAction.Render -> {
                 Glide.with(context)
                     .load(action.state.url)
-                    .apply(
-                        RequestOptions()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .onlyRetrieveFromCache(true)
-                    )
+                    .override(action.state.requestedWidth, action.state.requestedHeight)
                     .into(binding.ivPicture)
 
                 binding.tvAuthor.text = state.author

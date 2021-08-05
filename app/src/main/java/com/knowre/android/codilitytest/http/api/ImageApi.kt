@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.http
+package com.knowre.android.codilitytest.http.api
 
 import com.knowre.android.codilitytest.entity.ImageEntity
 import retrofit2.Call
