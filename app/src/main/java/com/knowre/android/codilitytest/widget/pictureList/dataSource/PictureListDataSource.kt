@@ -53,7 +53,7 @@ internal class PictureListDataSource @Inject constructor(
 
             val glideRequest = Glide.with(view.context)
 
-            tryLoadImageFromLocalCache(scope, view, id, url, requestedWidth, requestedHeight) {
+            tryLoadImageFromLocalCache(scope, view, id, decoding = { base64Encoder.decode(it) }) {
                 /** 로컬 캐쉬에서 bitmap 을 만들어 낸 것이 glide 로 부터 bitmap 만들어 낸 것보다 빨랐으므로 해당 이미지 뷰에 대한 모든 glide 요청 취소 */
                 glideRequest.clear(view)
 
@@ -61,17 +61,25 @@ internal class PictureListDataSource @Inject constructor(
             }
 
             tryLoadImageFromGlide(scope, glideRequest, view, id, url, requestedWidth, requestedHeight) {
+                it?.let {
+                    scope.launch(Dispatchers.IO) {
+                        val encoded = base64Encoder.encode(it)
+
+                        imageCachePreference.put(key = id.toString(), encoded)
+                    }
+                }
+
                 onComplete()
             }
         }
     }
 
-    private fun tryLoadImageFromLocalCache(scope: CoroutineScope, view: ImageView, id: Int, url: String, requestedWidth: Int, requestedHeight: Int, onComplete:() -> Unit) {
+    private fun tryLoadImageFromLocalCache(scope: CoroutineScope, view: ImageView, id: Int, decoding: (String) -> Bitmap, onComplete:() -> Unit) {
         scope.launch(Dispatchers.IO) {
             val encoded = imageCachePreference.get(id.toString())
 
             if (encoded.isNotEmpty()) {
-                val bitmap = base64Encoder.decode(encoded)
+                val bitmap = decoding(encoded)
 
                 withContext(Dispatchers.Main) {
                     onComplete()
@@ -82,11 +90,11 @@ internal class PictureListDataSource @Inject constructor(
         }
     }
 
-    private fun tryLoadImageFromGlide(scope: CoroutineScope, glideRequest: RequestManager, view: ImageView, id: Int, url: String, requestedWidth: Int, requestedHeight: Int, onComplete:() -> Unit) {
-        /** place holder 이미지를 원본 이미지의 사이즈 비율과 같데 만듦 */
+    private fun tryLoadImageFromGlide(scope: CoroutineScope, glideRequest: RequestManager, view: ImageView, id: Int, url: String, requestedWidth: Int, requestedHeight: Int, onComplete:(Bitmap?) -> Unit) {
+        /** place holder 이미지를 원본 이미지의 사이즈 비율과 같게 만듦 */
         val drawable = ContextCompat.getDrawable(view.context, R.drawable.image_loading_thumbnail)!!
-        val canvas = Canvas()
-        val bitmap = Bitmap.createBitmap(requestedWidth, requestedHeight, Bitmap.Config.ARGB_8888)
+        val canvas   = Canvas()
+        val bitmap   = Bitmap.createBitmap(requestedWidth, requestedHeight, Bitmap.Config.ARGB_8888)
         canvas.setBitmap(bitmap)
         drawable.setBounds(0, 0, requestedWidth, requestedHeight)
         drawable.draw(canvas)
@@ -98,20 +106,12 @@ internal class PictureListDataSource @Inject constructor(
             .override(requestedWidth, requestedHeight)
             .listener(object : RequestListener<Bitmap?> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap?>?, isFirstResource: Boolean): Boolean {
-                    onComplete()
+                    onComplete(null)
                     return false
                 }
 
                 override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap?>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    resource?.let {
-                        scope.launch(Dispatchers.IO) {
-                            val encoded = base64Encoder.encode(resource)
-
-                            imageCachePreference.put(key = id.toString(), encoded)
-                        }
-                    }
-
-                    onComplete()
+                    onComplete(resource)
                     return false
                 }
             })
