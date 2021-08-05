@@ -1,6 +1,5 @@
 package com.knowre.android.codilitytest.widget.pictureList
 
-import android.util.Log
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSourceApi
@@ -8,9 +7,9 @@ import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListAction
 import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListState
 import com.knowre.android.codilitytest.widget.pictureList.mapper.SinglePictureViewStateMapper
 import com.knowre.android.codilitytest.widget.pictureList.view.PictureListView
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListCallbackAction
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListRenderAction
-import com.knowre.android.codilitytest.widget.pictureList.view.state.PictureListViewState
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRenderAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
 import javax.inject.Inject
 
 

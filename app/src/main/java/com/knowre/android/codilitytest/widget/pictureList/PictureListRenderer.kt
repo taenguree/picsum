@@ -1,14 +1,13 @@
-package com.knowre.android.codilitytest.screen.main.renderer
+package com.knowre.android.codilitytest.widget.pictureList
 
-import android.util.Log
 import com.knowre.android.codilitytest.base.ActionEmitter
 import com.knowre.android.codilitytest.base.ActionListener
 import com.knowre.android.codilitytest.base.StateRenderer
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
 import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListAction
 import com.knowre.android.codilitytest.widget.pictureList.view.PictureListView
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListCallbackAction
-import com.knowre.android.codilitytest.widget.pictureList.view.state.PictureListViewState
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
 
 
 internal class PictureListRenderer constructor(private val pictureListView: PictureListView) : StateRenderer<PictureListViewState, PictureListAction>, ActionEmitter<PictureListAction> {

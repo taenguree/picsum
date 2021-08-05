@@ -1,12 +1,11 @@
 package com.knowre.android.codilitytest.widget.pictureList
 
-import android.hardware.Camera
 import com.knowre.android.codilitytest.extensions.swapOrAdd
 import com.knowre.android.codilitytest.knowRedux.Reducer
 import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListAction
 import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListState
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListCallbackAction
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListRenderAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRenderAction
 
 
 internal class PictureListReducer : Reducer<PictureListState, PictureListAction> {

@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.widget.pictureList.view.action
+package com.knowre.android.codilitytest.widget.pictureList.view.dto
 
 import com.knowre.android.codilitytest.widget.base.ViewAction
 import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState

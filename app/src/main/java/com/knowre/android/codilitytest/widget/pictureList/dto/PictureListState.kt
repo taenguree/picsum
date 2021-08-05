@@ -2,8 +2,7 @@ package com.knowre.android.codilitytest.widget.pictureList.dto
 
 import com.knowre.android.codilitytest.knowRedux.StateType
 import com.knowre.android.codilitytest.knowRedux.ViewStateAware
-import com.knowre.android.codilitytest.widget.pictureList.view.PictureListView
-import com.knowre.android.codilitytest.widget.pictureList.view.state.PictureListViewState
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
 
 
 internal data class PictureListState(

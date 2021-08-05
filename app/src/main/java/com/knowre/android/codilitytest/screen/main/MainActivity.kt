@@ -2,10 +2,11 @@ package com.knowre.android.codilitytest.screen.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.knowre.android.codilitytest.databinding.ActivityMainBinding
-import com.knowre.android.codilitytest.screen.main.renderer.PictureListRenderer
+import com.knowre.android.codilitytest.widget.io.IoRenderer
+import com.knowre.android.codilitytest.widget.pictureList.PictureListRenderer
+import com.knowre.android.codilitytest.widget.pictureList.view.PictureListIoView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,6 +23,7 @@ internal class MainActivity : AppCompatActivity() {
         setContentView(bindings.root)
 
         viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customPictureList))
+        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(PictureListIoView(bindings.customPictureList.binding.pbProgress)))
 
         viewModel.onCreate(savedInstanceState)
     }

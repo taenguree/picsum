@@ -22,6 +22,10 @@ internal class CoroutineRemote @Inject constructor(
 
     private val inProgressCalls: CopyOnWriteArrayList<Call<*>> = CopyOnWriteArrayList()
 
+    init {
+        Log.d("MY_LOG", "CoroutineRemote $callStateListener")
+    }
+
     override suspend fun <T> execute(call: Call<T>, maxRetryCountOnFail: Int): T {
         return withContext(Dispatchers.IO) { withRetry(call, currentRetryCount = 0, maxRetryCountOnFail = maxRetryCountOnFail) { coroutineRetrofit.async(call, parentJob = null).await() }.also { inProgressCalls.remove(call) } }
     }
@@ -61,8 +65,13 @@ internal class CoroutineRemote @Inject constructor(
             result
         } catch (t: Throwable) {
             if (t !is RetryExhaustedException) {
-                Log.d("MY_LOG", "exception $t")
-                withRetry(call = call, currentRetryCount = currentRetryCount + 1, maxRetryCountOnFail = maxRetryCountOnFail, throwable = t, callExecutionBlock = callExecutionBlock)
+                if (currentRetryCount <= maxRetryCountOnFail) {
+                    withRetry(call = call, currentRetryCount = currentRetryCount + 1, maxRetryCountOnFail = maxRetryCountOnFail, throwable = t, callExecutionBlock = callExecutionBlock)
+                } else {
+                    inProgressCalls.remove(call)
+
+                    throw t
+                }
             } else {
                 inProgressCalls.remove(call)
 

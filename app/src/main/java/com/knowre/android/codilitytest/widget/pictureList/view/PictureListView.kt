@@ -2,12 +2,9 @@ package com.knowre.android.codilitytest.widget.pictureList.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.knowre.android.codilitytest.R
@@ -15,10 +12,10 @@ import com.knowre.android.codilitytest.databinding.ViewPictureListBinding
 import com.knowre.android.codilitytest.extensions.doOnPostLayout
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
 import com.knowre.android.codilitytest.widget.base.WidgetView
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListCallbackAction
-import com.knowre.android.codilitytest.widget.pictureList.view.action.PictureListRenderAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRenderAction
 import com.knowre.android.codilitytest.widget.pictureList.view.recycler.PictureListAdapter
-import com.knowre.android.codilitytest.widget.pictureList.view.state.PictureListViewState
+import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
 
 
 internal class PictureListView constructor(
@@ -31,7 +28,7 @@ internal class PictureListView constructor(
         const val COLUMN_COUNT = 2
     }
 
-    private val binding = ViewPictureListBinding.inflate(LayoutInflater.from(context), this, true)
+    val binding = ViewPictureListBinding.inflate(LayoutInflater.from(context), this, true)
 
     private var pictureListAdapter = PictureListAdapter()
 
