@@ -6,11 +6,11 @@ import com.knowre.android.codilitytest.knowRedux.ViewStateType
 
 internal data class SinglePictureViewState(
     val id: Int,
-    val width: Int,
-    val height: Int,
+    val imageOriginalWidth: Int,
+    val imageOriginalHeight: Int,
     val requestedWidth: Int,
     val requestedHeight: Int,
     val url: String,
     val author: String,
-    val imageBinder: ImageBinder
+    val setImage: ImageBinder
 ) : ViewStateType

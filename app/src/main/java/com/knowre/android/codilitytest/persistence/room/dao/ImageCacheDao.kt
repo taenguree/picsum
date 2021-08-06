@@ -11,7 +11,7 @@ import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
 @Dao
 internal interface ImageCacheDao {
     @Query("SELECT * FROM $IMAGE_CACHE_TABLE WHERE id = :id")
-    fun getImageEntity(id: Int): LocalImageEntity?
+    fun getImageEntity(id: Int): List<LocalImageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertImageEntity(entity: LocalImageEntity)

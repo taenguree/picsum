@@ -1,6 +1,16 @@
 package com.knowre.android.codilitytest.screen.detail.view.dto
 
+import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.knowRedux.ViewStateType
 
 
-internal data class DetailViewState(val _place_holder: String = "") : ViewStateType
+internal data class DetailViewState(
+    val id: Int = -1,
+    val url: String = "",
+    val author: String = "",
+    val requestedWidth: Int = -1,
+    val requestedHeight: Int = -1,
+    val isGrayScale: Boolean = false,
+    val isBlur: Boolean = false,
+    val setImage: ImageBinder = { _, _, _, _, _, _, _, _ ->  }
+) : ViewStateType

@@ -28,6 +28,8 @@ internal class PictureListView constructor(
 ) : ConstraintLayout(context, attrs), Widget<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
 
     companion object {
+        private const val VERY_BOTTOM_SCROLL_ITEM_THRESHOLD = 15
+
         const val COLUMN_COUNT = 2
 
         val GRID_MARGIN_IN_PX = 4.toPx
@@ -75,14 +77,10 @@ internal class PictureListView constructor(
 
                     val itemCount = recyclerView.adapter!!.itemCount
 
-                    if (lastItemPosition > itemCount - 10) {
-                        listener?.onAction(PictureListCallbackAction.OnAlmostScrolledToVeryBottom(itemCount))
+                    if (lastItemPosition > itemCount - VERY_BOTTOM_SCROLL_ITEM_THRESHOLD) {
+                        listener?.onAction(PictureListCallbackAction.OnAlmostScrolledToVeryBottom())
                     }
                 }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
             }
         })
     }

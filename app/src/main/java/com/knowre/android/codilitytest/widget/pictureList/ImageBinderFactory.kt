@@ -32,24 +32,31 @@ internal class ImageBinderFactory @Inject constructor(
 ) {
 
     fun getImageBinder(scope: CoroutineScope): ImageBinder {
-        return { view: ImageView, id: Int, url: String, requestedWidth: Int, requestedHeight: Int, onStart: () -> Unit, onComplete:() -> Unit ->
+        return { view: ImageView, id: Int, url: String, useCache: Boolean, requestedWidth: Int, requestedHeight: Int, onStart: () -> Unit, onComplete:() -> Unit ->
             onStart()
+
+            /** 이전 글라이드 요청이 있다면 취소 */
+            Glide.with(view.context).clear(view)
 
             val glideRequest = Glide.with(view.context)
 
-            tryAsyncLoadImageFromLocalCache(scope, view, id, decoding = { base64Encoder.decode(it) }) {
-                /** 로컬 캐쉬에서 bitmap 을 만들어 낸 것이 glide 로 부터 bitmap 만들어 낸 것보다 빨랐으므로 해당 이미지 뷰에 대한 모든 glide 요청 취소 */
-                glideRequest.clear(view)
+            if (useCache) {
+                tryAsyncLoadImageFromLocalCache(scope, view, id, decoding = { base64Encoder.decode(it) }) {
+                    /** 로컬 캐쉬에서 bitmap 을 만들어 낸 것이 glide 로 부터 bitmap 만들어 낸 것보다 빨랐으므로 해당 이미지 뷰에 대한 모든 glide 요청 취소 */
+                    glideRequest.clear(view)
 
-                onComplete()
+                    onComplete()
+                }
             }
 
             tryAsyncLoadImageFromGlide(glideRequest, view, id, url, requestedWidth, requestedHeight) {
-                it?.let {
-                    scope.launch(Dispatchers.IO) {
-                        val encoded = base64Encoder.encode(it)
+                if (useCache) {
+                    it?.let {
+                        scope.launch(Dispatchers.IO) {
+                            val encoded = base64Encoder.encode(it)
 
-                        imagePersistenceCache.put(key = id, LocalImageEntity(id, encoded))
+                            imagePersistenceCache.put(key = id, LocalImageEntity(id, encoded))
+                        }
                     }
                 }
 

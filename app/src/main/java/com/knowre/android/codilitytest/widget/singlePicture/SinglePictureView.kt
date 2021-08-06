@@ -34,10 +34,11 @@ internal class SinglePictureView constructor(
 
         when (action) {
             is SinglePictureRenderAction.Render -> {
-                state.imageBinder(
+                state.setImage(
                     binding.ivPicture,
                     state.id,
                     state.url,
+                    true,
                     state.requestedWidth,
                     state.requestedHeight,
                     { binding.pbProgress.visibility = View.VISIBLE },

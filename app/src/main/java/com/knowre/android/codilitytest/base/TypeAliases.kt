@@ -7,6 +7,7 @@ typealias ImageBinder = (
     view: ImageView,
     id: Int,
     url: String,
+    useCache: Boolean,
     requestedWidth: Int,
     requestedHeight: Int,
     onStart: () -> Unit,

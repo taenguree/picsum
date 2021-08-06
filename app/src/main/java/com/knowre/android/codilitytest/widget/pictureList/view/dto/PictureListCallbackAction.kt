@@ -5,9 +5,9 @@ import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureV
 
 
 internal sealed class PictureListCallbackAction : ViewAction {
-    class OnInitialSizeMeasured(val width: Int, val height: Int, val horizontalMarginsSum: Int, val verticalMarginsSum: Int) : PictureListCallbackAction()
+    data class OnInitialSizeMeasured(val width: Int, val height: Int, val horizontalMarginsSum: Int, val verticalMarginsSum: Int) : PictureListCallbackAction()
 
-    class OnAlmostScrolledToVeryBottom(val totalItemCount: Int) : PictureListCallbackAction()
+    class OnAlmostScrolledToVeryBottom() : PictureListCallbackAction()
 
-    class OnImageClicked(val state: SinglePictureViewState) : PictureListCallbackAction()
+    data class OnImageClicked(val state: SinglePictureViewState) : PictureListCallbackAction()
 }

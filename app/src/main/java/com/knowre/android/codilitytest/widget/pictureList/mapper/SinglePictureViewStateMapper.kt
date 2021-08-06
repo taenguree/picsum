@@ -15,14 +15,14 @@ internal class SinglePictureViewStateMapper @Inject constructor() {
         val requestedHeight = (requestedWidth/ratio).toInt()
 
         return SinglePictureViewState(
-            id              = imageEntity.id,
-            width           = imageEntity.width,
-            height          = imageEntity.height,
-            requestedWidth  = requestedWidth,
-            requestedHeight = requestedHeight,
-            url             = imageEntity.downloadUrl,
-            author          = imageEntity.author,
-            imageBinder     = imageBinder
+            id                  = imageEntity.id,
+            imageOriginalWidth  = imageEntity.width,
+            imageOriginalHeight = imageEntity.height,
+            requestedWidth      = requestedWidth,
+            requestedHeight     = requestedHeight,
+            url                 = imageEntity.downloadUrl,
+            author              = imageEntity.author,
+            setImage            = imageBinder
         )
     }
 

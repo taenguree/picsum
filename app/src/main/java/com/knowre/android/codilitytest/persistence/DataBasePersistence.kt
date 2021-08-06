@@ -10,7 +10,7 @@ internal class DataBasePersistence constructor(
 ) : PersistenceApi<Int, LocalImageEntity> {
 
     override fun get(key: Int): LocalImageEntity? {
-        return database.imageCacheDao().getImageEntity(key)
+        return database.imageCacheDao().getImageEntity(key).firstOrNull()
     }
 
     override fun put(key: Int, value: LocalImageEntity) {

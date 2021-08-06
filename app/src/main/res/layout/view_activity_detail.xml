@@ -6,4 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".screen.detail.DetailActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="40dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/tv_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/b_gray_scale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="author" />
+
+    <Button
+        android:id="@+id/b_gray_scale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/gray_scale"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/b_blur"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/b_blur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/blur"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/b_gray_scale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/b_gray_scale"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/pb_gray_scale_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/b_gray_scale"
+        app:layout_constraintEnd_toEndOf="@+id/b_gray_scale"
+        app:layout_constraintStart_toStartOf="@+id/b_gray_scale"
+        app:layout_constraintTop_toTopOf="@+id/b_gray_scale" />
+
+    <ProgressBar
+        android:id="@+id/pb_blur_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/b_blur"
+        app:layout_constraintEnd_toEndOf="@+id/b_blur"
+        app:layout_constraintStart_toStartOf="@+id/b_blur"
+        app:layout_constraintTop_toTopOf="@+id/b_blur" />
+
+    <ProgressBar
+        android:id="@+id/pb_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_picture"
+        app:layout_constraintEnd_toEndOf="@+id/iv_picture"
+        app:layout_constraintStart_toStartOf="@+id/iv_picture"
+        app:layout_constraintTop_toTopOf="@+id/iv_picture" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
