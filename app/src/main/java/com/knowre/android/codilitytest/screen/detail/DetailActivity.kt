@@ -25,7 +25,7 @@ internal class DetailActivity : AppCompatActivity() {
 
         viewModel.detailStateModel.setRenderer(DetailRenderer(binding.customDetail))
 
-        viewModel.onCreate(savedInstanceState)
+        viewModel.onCreate(savedInstanceState, intent)
     }
 
 }

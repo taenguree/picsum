@@ -1,5 +1,6 @@
 package com.knowre.android.codilitytest.base
 
+import android.content.Intent
 import android.os.Bundle
 import com.knowre.android.codilitytest.knowRedux.Action
 import com.knowre.android.codilitytest.knowRedux.MiddlewareType
@@ -15,7 +16,7 @@ internal open class LifecycleAwareStateModel<VS: ViewStateType, S : ViewStateAwa
 
 ) : BaseStateModel<VS, S, A>(initialState, reducer, middleware) {
 
-    open fun onCreate(savedInstanceState: Bundle?) = Unit
+    open fun onCreate(savedInstanceState: Bundle?, intent: Intent? = null) = Unit
 
     open fun onStart() = Unit
 
