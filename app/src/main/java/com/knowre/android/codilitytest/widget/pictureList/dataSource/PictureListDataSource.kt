@@ -11,8 +11,6 @@ internal class PictureListDataSource @Inject constructor(
 
 ) : PictureListDataSourceApi, ImageDataSourceApi by imageDataSource {
 
-    companion object { private const val LIMIT = 100 }
-
     private var isNextPageFetchingInProgress = false
 
     override suspend fun fetchNextPageImageList(currentPage: Int): List<ImageEntity>? {
