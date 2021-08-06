@@ -18,8 +18,6 @@
 
 ## Libraries
 
-The external libraries used include:
-
 - Basic
   - [Coroutine](https://kotlinlang.org/docs/coroutines-overview.html)
 
