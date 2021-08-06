@@ -1,7 +1,7 @@
 package com.knowre.android.codilitytest.widget.pictureList.mapper
 
+import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.entity.ImageEntity
-import com.knowre.android.codilitytest.widget.singlePicture.state.ImageBinder
 import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState
 import javax.inject.Inject
 
