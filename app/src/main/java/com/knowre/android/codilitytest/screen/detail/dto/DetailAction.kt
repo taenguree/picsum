@@ -8,6 +8,10 @@ import com.knowre.android.codilitytest.screen.detail.view.dto.DetailViewRenderAc
 
 
 internal sealed class DetailAction : Action {
+    sealed class Input : DetailAction() {
+        class IntentData(val detailIntentData: DetailIntentData) : Input()
+    }
+
     data class Render(override val action: DetailViewRenderAction) : DetailAction(), ViewRenderAction<DetailViewRenderAction>
 
     data class Callback(override val action: DetailViewCallbackAction) : DetailAction(), ViewCallbackAction<DetailViewCallbackAction>

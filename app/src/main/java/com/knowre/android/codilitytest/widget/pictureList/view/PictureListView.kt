@@ -18,6 +18,7 @@ import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRe
 import com.knowre.android.codilitytest.widget.pictureList.view.recycler.PictureListAdapter
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
 import com.knowre.android.codilitytest.widget.pictureList.view.recycler.GridMarginDecoration
+import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureCallbackAction
 
 
 internal class PictureListView constructor(
@@ -40,6 +41,7 @@ internal class PictureListView constructor(
 
     init {
         initializeRecyclerView()
+        initializeListener()
 
         doOnPostLayout {
             listener?.onAction(PictureListCallbackAction.OnInitialSizeMeasured(it.width, it.height, horizontalMarginsSum = GRID_MARGIN_IN_PX * (COLUMN_COUNT + 1), verticalMarginsSum = 0))
@@ -81,6 +83,16 @@ internal class PictureListView constructor(
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+    }
+
+    private fun initializeListener() {
+        pictureListAdapter.setListener(object : ViewCallbackListener<SinglePictureCallbackAction> {
+            override fun onAction(action: SinglePictureCallbackAction) {
+                when (action) {
+                    is SinglePictureCallbackAction.Clicked -> listener?.onAction(PictureListCallbackAction.OnImageClicked(action.state))
+                }
             }
         })
     }

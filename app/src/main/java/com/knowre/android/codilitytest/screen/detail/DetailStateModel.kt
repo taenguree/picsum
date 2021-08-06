@@ -1,5 +1,6 @@
 package com.knowre.android.codilitytest.screen.detail
 
+import android.os.Bundle
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
 import com.knowre.android.codilitytest.screen.detail.dto.DetailAction
@@ -13,4 +14,9 @@ internal class DetailStateModel @Inject constructor() : LifecycleAwareStateModel
     reducer      = DetailReducer(),
     middleware   = LoggingMiddleware()
 ) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
 }

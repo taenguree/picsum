@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class MainViewModel @Inject constructor(
-                       val mainStateModel: BaseStateModel<MainViewState, MainState, MainAction>,
-                       val pictureListStateModel: BaseStateModel<PictureListViewState, PictureListState, PictureListAction>,
-        @PictureListIo val pictureListLoadIoModule: BaseStateModel<IoViewState, IoState, IoAction>
+                   val mainStateModel: BaseStateModel<MainViewState, MainState, MainAction>,
+                   val pictureListStateModel: BaseStateModel<PictureListViewState, PictureListState, PictureListAction>,
+    @PictureListIo val pictureListLoadIoModule: BaseStateModel<IoViewState, IoState, IoAction>
 
 ) : CoroutineViewModel(mainStateModel, pictureListStateModel, pictureListLoadIoModule)

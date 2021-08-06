@@ -13,4 +13,4 @@ import javax.inject.Inject
 internal class DetailViewModel @Inject constructor(
     val detailStateModel: BaseStateModel<DetailViewState, DetailState, DetailAction>
 
-) : CoroutineViewModel()
+) : CoroutineViewModel(detailStateModel)
