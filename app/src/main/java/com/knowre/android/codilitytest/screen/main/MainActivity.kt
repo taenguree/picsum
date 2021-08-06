@@ -23,8 +23,8 @@ internal class MainActivity : AppCompatActivity() {
         setContentView(bindings.root)
 
         viewModel.mainStateModel.setRenderer(MainRenderer())
-        viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customPictureList))
-        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(BasicIoView(bindings.customPictureList.binding.pbProgress, this)))
+        viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customMain.binding.customPictureList))
+        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(BasicIoView(bindings.customMain.binding.customPictureList.binding.pbProgress, this)))
 
         viewModel.onCreate(savedInstanceState)
     }
