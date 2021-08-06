@@ -6,6 +6,7 @@ import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
 import com.knowre.android.codilitytest.http.api.ImageApi
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
+import com.knowre.android.codilitytest.screen.detail.dataSource.DetailDataSourceApi
 import com.knowre.android.codilitytest.screen.detail.dto.DetailAction
 import com.knowre.android.codilitytest.screen.detail.dto.DetailIntentData
 import com.knowre.android.codilitytest.screen.detail.dto.DetailState
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 
 internal class DetailStateModel @Inject constructor(
+    private val dataSource: DetailDataSourceApi,
     private val imageBinderFactory: ImageBinderFactory
 
 ) : LifecycleAwareStateModel<DetailViewState, DetailState, DetailAction>(

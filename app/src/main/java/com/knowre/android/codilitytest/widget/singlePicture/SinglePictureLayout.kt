@@ -13,7 +13,7 @@ import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePicture
 import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState
 
 
-internal class SinglePictureView constructor(
+internal class SinglePictureLayout constructor(
     context: Context,
     attrs: AttributeSet? = null
 

@@ -3,6 +3,7 @@ package com.knowre.android.codilitytest.widget.pictureList.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -21,11 +22,11 @@ import com.knowre.android.codilitytest.widget.pictureList.view.recycler.GridMarg
 import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureCallbackAction
 
 
-internal class PictureListView constructor(
+internal class PictureListLayout constructor(
     context: Context,
     attrs: AttributeSet? = null
 
-) : ConstraintLayout(context, attrs), Widget<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
+) : FrameLayout(context, attrs), Widget<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
 
     companion object {
         private const val VERY_BOTTOM_SCROLL_ITEM_THRESHOLD = 15

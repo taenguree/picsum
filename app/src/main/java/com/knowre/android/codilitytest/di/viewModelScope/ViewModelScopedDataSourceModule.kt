@@ -2,6 +2,8 @@ package com.knowre.android.codilitytest.di.viewModelScope
 
 import com.knowre.android.codilitytest.dataSource.ImageDataSource
 import com.knowre.android.codilitytest.dataSource.ImageDataSourceApi
+import com.knowre.android.codilitytest.screen.detail.dataSource.DetailDataSource
+import com.knowre.android.codilitytest.screen.detail.dataSource.DetailDataSourceApi
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSource
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSourceApi
 import dagger.Binds
@@ -25,4 +27,8 @@ internal interface ViewModelScopedDataSourceModule {
     @Binds
     @ViewModelScoped
     fun provideImageDataSource(dataSource: ImageDataSource): ImageDataSourceApi
+
+    @Binds
+    @ViewModelScoped
+    fun provideDetailDataSource(dataSource: DetailDataSource): DetailDataSourceApi
 }

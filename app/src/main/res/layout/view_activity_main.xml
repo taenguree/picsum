@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".screen.main.MainActivity">
 
-    <com.knowre.android.codilitytest.widget.pictureList.view.PictureListView
+    <com.knowre.android.codilitytest.widget.pictureList.view.PictureListLayout
         android:id="@+id/custom_picture_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
