@@ -18,11 +18,6 @@
 
 ## Libraries
 
-The internal libraries used include:
-
-- Stroke recognition
-  - [Myscript](https://github.com/Knowre-Dev/myscript-android)
-  
 The external libraries used include:
 
 - Basic
