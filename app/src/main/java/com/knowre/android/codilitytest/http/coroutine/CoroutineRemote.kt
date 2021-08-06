@@ -22,10 +22,6 @@ internal class CoroutineRemote @Inject constructor(
 
     private val inProgressCalls: CopyOnWriteArrayList<Call<*>> = CopyOnWriteArrayList()
 
-    init {
-        Log.d("MY_LOG", "CoroutineRemote $callStateListener")
-    }
-
     override suspend fun <T> execute(call: Call<T>, maxRetryCountOnFail: Int): T {
         return withContext(Dispatchers.IO) { withRetry(call, currentRetryCount = 0, maxRetryCountOnFail = maxRetryCountOnFail) { coroutineRetrofit.async(call, parentJob = null).await() }.also { inProgressCalls.remove(call) } }
     }

@@ -1,6 +1,5 @@
 package com.knowre.android.codilitytest.screen.main
 
-import android.util.Log
 import com.knowre.android.codilitytest.base.BaseStateModel
 import com.knowre.android.codilitytest.base.CoroutineViewModel
 import com.knowre.android.codilitytest.di.qualifier.PictureListIo
@@ -20,8 +19,4 @@ internal class MainViewModel @Inject constructor(
                        val pictureListStateModel: BaseStateModel<PictureListViewState, PictureListState, PictureListAction>,
         @PictureListIo val pictureListLoadIoModule: BaseStateModel<IoViewState, IoState, IoAction>
 
-) : CoroutineViewModel(pictureListStateModel, pictureListLoadIoModule) {
-    init {
-        Log.d("MY_LOG", "MainViewModel $pictureListLoadIoModule")
-    }
-}
+) : CoroutineViewModel(mainStateModel, pictureListStateModel, pictureListLoadIoModule)

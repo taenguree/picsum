@@ -39,7 +39,8 @@ internal class PictureListStateModel @Inject constructor(
 
                         viewStates?.let {
                             dispatch(PictureListAction.Render(PictureListRenderAction.AppendPictures(viewStates)))
-                            dispatch(PictureListAction.Render(PictureListRenderAction.ShowAppendToast(isNoMorePictureExists = viewStates.isEmpty())))
+
+                            if (getState().isNoMorePictureExist) { dispatch(PictureListAction.Render(PictureListRenderAction.ShowMorePictureExistToast())) }
                         }
                     }
                 }

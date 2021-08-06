@@ -30,7 +30,7 @@ internal class PictureListDataSource @Inject constructor(
 
 ) : PictureListDataSourceApi {
 
-    companion object { private const val LIMIT = 20 }
+    companion object { private const val LIMIT = 100 }
 
     private var currentPage = 1
 

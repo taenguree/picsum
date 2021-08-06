@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.knowre.android.codilitytest.R
-import com.knowre.android.codilitytest.widget.base.WidgetView
+import com.knowre.android.codilitytest.widget.base.Widget
 import com.knowre.android.codilitytest.widget.singlePicture.SinglePictureView
 import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureCallbackAction
 import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureRenderAction
 import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState
 
 
-internal class PictureListViewHolder constructor(private val view: View, private val singlePictureView: SinglePictureView) : RecyclerView.ViewHolder(view), WidgetView<SinglePictureViewState, SinglePictureRenderAction, SinglePictureCallbackAction> by singlePictureView {
+internal class PictureListViewHolder constructor(private val view: View, private val singlePictureView: SinglePictureView) : RecyclerView.ViewHolder(view), Widget<SinglePictureViewState, SinglePictureRenderAction, SinglePictureCallbackAction> by singlePictureView {
 
     companion object {
         fun newInstance(parent: ViewGroup): PictureListViewHolder {

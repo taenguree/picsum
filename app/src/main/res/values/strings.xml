@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Picsum</string>
 
-    <string name="load_more_picture_success">사진이 추가되었습니다.</string>
     <string name="no_more_picture_exists">더 추가할 사진이 없습니다.</string>
 </resources>

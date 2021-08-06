@@ -11,7 +11,7 @@ import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.databinding.ViewPictureListBinding
 import com.knowre.android.codilitytest.extensions.doOnPostLayout
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
-import com.knowre.android.codilitytest.widget.base.WidgetView
+import com.knowre.android.codilitytest.widget.base.Widget
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRenderAction
 import com.knowre.android.codilitytest.widget.pictureList.view.recycler.PictureListAdapter
@@ -22,7 +22,7 @@ internal class PictureListView constructor(
     context: Context,
     attrs: AttributeSet? = null
 
-) : ConstraintLayout(context, attrs), WidgetView<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
+) : ConstraintLayout(context, attrs), Widget<PictureListViewState, PictureListRenderAction, PictureListCallbackAction> {
 
     companion object {
         const val COLUMN_COUNT = 2
@@ -44,9 +44,8 @@ internal class PictureListView constructor(
 
     override fun render(state: PictureListViewState, action: PictureListRenderAction) {
         when (action) {
-            is PictureListRenderAction.AppendPictures  -> pictureListAdapter.addStates(action.singlePictureStates)
-            is PictureListRenderAction.ShowAppendToast -> if (action.isNoMorePictureExists) { resources.getString(R.string.no_more_picture_exists) } else { resources.getString(R.string.load_more_picture_success) }
-                .also { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() }
+            is PictureListRenderAction.AppendPictures            -> pictureListAdapter.addStates(action.singlePictureStates)
+            is PictureListRenderAction.ShowMorePictureExistToast -> Toast.makeText(context, resources.getString(R.string.no_more_picture_exists), Toast.LENGTH_SHORT).show()
         }
     }
 

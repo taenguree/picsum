@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.FrameLayout
 import com.knowre.android.codilitytest.databinding.ViewSinglePictureBinding
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
-import com.knowre.android.codilitytest.widget.base.WidgetView
+import com.knowre.android.codilitytest.widget.base.Widget
 import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureCallbackAction
 import com.knowre.android.codilitytest.widget.singlePicture.action.SinglePictureRenderAction
 import com.knowre.android.codilitytest.widget.singlePicture.state.SinglePictureViewState
@@ -18,7 +17,7 @@ internal class SinglePictureView constructor(
     context: Context,
     attrs: AttributeSet? = null
 
-) : ConstraintLayout(context, attrs), WidgetView<SinglePictureViewState, SinglePictureRenderAction, SinglePictureCallbackAction> {
+) : FrameLayout(context, attrs), Widget<SinglePictureViewState, SinglePictureRenderAction, SinglePictureCallbackAction> {
 
     private val binding = ViewSinglePictureBinding.inflate(LayoutInflater.from(context), this, true)
 

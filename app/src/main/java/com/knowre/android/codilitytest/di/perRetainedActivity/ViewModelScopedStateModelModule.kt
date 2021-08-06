@@ -1,6 +1,5 @@
 package com.knowre.android.codilitytest.di.perRetainedActivity
 
-import android.util.Log
 import com.knowre.android.codilitytest.base.BaseStateModel
 import com.knowre.android.codilitytest.di.qualifier.PictureListIo
 import com.knowre.android.codilitytest.http.callState.CallStateListenerApi
@@ -16,28 +15,30 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Call
 
 
-@InstallIn(ActivityRetainedComponent::class)
-@Module(includes = [PerRetainedActivityStateModelModule.ProvideModule::class])
-internal interface PerRetainedActivityStateModelModule {
-    @InstallIn(ActivityComponent::class)
+@InstallIn(ViewModelComponent::class)
+@Module(includes = [ViewModelScopedStateModelModule.ProvideModule::class])
+internal interface ViewModelScopedStateModelModule {
+    @InstallIn(ViewModelComponent::class)
     @Module
     object ProvideModule {
         @Provides
+        @ViewModelScoped
         fun provideCallStateListener(@PictureListIo ioStateModel: BaseStateModel<IoViewState, IoState, IoAction>): CallStateListenerApi<Call<*>> {
-            Log.d("MY_LOG", "provideCallStateListener $ioStateModel")
             return ioStateModel as IoStateModel
         }
     }
 
     @Binds
+    @ViewModelScoped
     fun providePictureListStateModel(stateModel: PictureListStateModel): BaseStateModel<PictureListViewState, PictureListState, PictureListAction>
 
     @Binds
+    @ViewModelScoped
     @PictureListIo
     fun providePictureListIoStateModel(stateModel: IoStateModel): BaseStateModel<IoViewState, IoState, IoAction>
 }

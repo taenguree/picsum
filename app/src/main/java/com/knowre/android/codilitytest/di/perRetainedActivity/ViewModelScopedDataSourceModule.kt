@@ -5,17 +5,18 @@ import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureList
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 
-@InstallIn(ActivityRetainedComponent::class)
-@Module(includes = [PerRetainedActivityDataSourceModule.ProvideModule::class])
-internal interface PerRetainedActivityDataSourceModule {
-    @InstallIn(ActivityComponent::class)
+@InstallIn(ViewModelComponent::class)
+@Module(includes = [ViewModelScopedDataSourceModule.ProvideModule::class])
+internal interface ViewModelScopedDataSourceModule {
+    @InstallIn(ViewModelComponent::class)
     @Module
     object ProvideModule {}
 
     @Binds
+    @ViewModelScoped
     fun providePictureListDataSource(dataSource: PictureListDataSource): PictureListDataSourceApi
 }
