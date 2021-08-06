@@ -12,37 +12,37 @@ import retrofit2.Call
 import javax.inject.Inject
 
 
-internal class IoStateModel @Inject constructor() : LifecycleAwareStateModel<IoViewState, IoState, IoAction>(
+internal open class IoStateModel @Inject constructor() : LifecycleAwareStateModel<IoViewState, IoState, IoAction>(
     initialState = IoState(),
     reducer      = IoReducer(),
     middleware   = LoggingMiddleware("NET")
 ), CallStateListenerApi<Call<*>> {
 
-    override fun onInitialCallStarted(call: Call<*>) {
+    override fun onInitialCallStarted(call: Call<*>, id: String?) {
         launch(Dispatchers.Main.immediate) {
             dispatch(IoAction.Render(IoViewRenderAction.ShowLoading()))
         }
     }
 
-    override fun onRetryingBackoffStarted(call: Call<*>, throwable: Throwable, backOffDelay: Long, retryCount: Int) {
+    override fun onRetryingBackoffStarted(call: Call<*>, id: String?, throwable: Throwable, backOffDelay: Long, retryCount: Int) {
     }
 
-    override fun onRetryCallStarted(call: Call<*>, throwable: Throwable, retryCount: Int) {
+    override fun onRetryCallStarted(call: Call<*>, id: String?, throwable: Throwable, retryCount: Int) {
     }
 
-    override fun onSucceed(call: Call<*>) {
+    override fun onSucceed(call: Call<*>, id: String?) {
         launch(Dispatchers.Main.immediate) {
             dispatch(IoAction.Render(IoViewRenderAction.HideLoading()))
         }
     }
 
-    override fun onFailure(call: Call<*>, throwable: Throwable, retryCount: Int) {
+    override fun onFailure(call: Call<*>, id: String?, throwable: Throwable, retryCount: Int) {
         launch(Dispatchers.Main.immediate) {
             dispatch(IoAction.Render(IoViewRenderAction.HideLoading()))
         }
     }
 
-    override fun onResponseIgnored(call: Call<*>) {
+    override fun onResponseIgnored(call: Call<*>, id: String?) {
         launch(Dispatchers.Main.immediate) {
             dispatch(IoAction.Render(IoViewRenderAction.HideLoading()))
         }

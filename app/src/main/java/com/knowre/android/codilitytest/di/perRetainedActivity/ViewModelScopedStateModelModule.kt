@@ -28,8 +28,8 @@ internal interface ViewModelScopedStateModelModule {
     object ProvideModule {
         @Provides
         @ViewModelScoped
-        fun provideCallStateListener(@PictureListIo ioStateModel: BaseStateModel<IoViewState, IoState, IoAction>): CallStateListenerApi<Call<*>> {
-            return ioStateModel as IoStateModel
+        fun provideCallStateListener(@PictureListIo ioStateModel: BaseStateModel<IoViewState, IoState, IoAction>): Collection<CallStateListenerApi<Call<*>>> {
+            return listOf(ioStateModel as IoStateModel)
         }
     }
 
