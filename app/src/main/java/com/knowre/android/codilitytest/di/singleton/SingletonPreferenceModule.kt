@@ -1,29 +1,18 @@
 package com.knowre.android.codilitytest.di.singleton
 
 import android.content.Context
-import android.preference.Preference
-import android.preference.PreferenceManager
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.google.gson.Gson
-import com.knowre.android.codilitytest.BuildConfig
-import com.knowre.android.codilitytest.http.api.ImageApi
-import com.knowre.android.codilitytest.http.retry.RetryPolicy
-import com.knowre.android.codilitytest.http.retry.RetryPolicyApi
-import com.knowre.android.codilitytest.persistence.ImageCachePreference
-import com.knowre.android.codilitytest.persistence.PreferenceApi
-import dagger.Binds
+import androidx.room.Room
+import com.knowre.android.codilitytest.di.qualifier.Database
+import com.knowre.android.codilitytest.persistence.DataBasePersistence
+import com.knowre.android.codilitytest.persistence.PersistenceApi
+import com.knowre.android.codilitytest.persistence.room.DB_NAME
+import com.knowre.android.codilitytest.persistence.room.database.PicsumDatabase
+import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -35,11 +24,15 @@ internal interface SingletonPreferenceModule {
     object ProvideModule {
         @Provides
         @Singleton
-        fun providePreference(@ApplicationContext context: Context): PreferenceApi<String> {
-            val preference = PreferenceManager.getDefaultSharedPreferences(context)
-
-            return ImageCachePreference(preference = preference, editor = preference.edit())
+        @Database
+        fun providePersistence(dataBase: PicsumDatabase): PersistenceApi<Int, LocalImageEntity> {
+            return DataBasePersistence(dataBase)
         }
 
+        @Provides
+        @Singleton
+        fun providePictureDatabase(@ApplicationContext context: Context): PicsumDatabase {
+            return Room.databaseBuilder(context, PicsumDatabase::class.java, DB_NAME).build()
+        }
     }
 }

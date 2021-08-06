@@ -2,7 +2,6 @@ package com.knowre.android.codilitytest.widget.pictureList.dataSource
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -12,21 +11,23 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.knowre.android.codilitytest.R
+import com.knowre.android.codilitytest.di.qualifier.Database
 import com.knowre.android.codilitytest.entity.ImageEntity
 import com.knowre.android.codilitytest.helper.Base64Encoder
 import com.knowre.android.codilitytest.http.api.ImageApi
 import com.knowre.android.codilitytest.http.coroutine.CoroutineRemoteApi
-import com.knowre.android.codilitytest.persistence.PreferenceApi
+import com.knowre.android.codilitytest.persistence.PersistenceApi
+import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
 import com.knowre.android.codilitytest.widget.singlePicture.state.ImageBinder
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
 internal class PictureListDataSource @Inject constructor(
-    private val api: ImageApi,
-    private val coroutineRemote: CoroutineRemoteApi,
-    private val imageCachePreference: PreferenceApi<String>,
-    private val base64Encoder: Base64Encoder
+              private val api: ImageApi,
+              private val coroutineRemote: CoroutineRemoteApi,
+              private val base64Encoder: Base64Encoder,
+    @Database private val imagePersistenceCache: PersistenceApi<@JvmSuppressWildcards Int, LocalImageEntity>
 
 ) : PictureListDataSourceApi {
 
@@ -74,7 +75,7 @@ internal class PictureListDataSource @Inject constructor(
                     scope.launch(Dispatchers.IO) {
                         val encoded = base64Encoder.encode(it)
 
-                        imageCachePreference.put(key = id.toString(), encoded)
+                        imagePersistenceCache.put(key = id, LocalImageEntity(id, encoded))
                     }
                 }
 
@@ -85,10 +86,10 @@ internal class PictureListDataSource @Inject constructor(
 
     private fun tryAsyncLoadImageFromLocalCache(scope: CoroutineScope, view: ImageView, id: Int, decoding: (String) -> Bitmap, onComplete:() -> Unit) {
         scope.launch(Dispatchers.IO) {
-            val encoded = imageCachePreference.get(id.toString())
+            val localImageentity = imagePersistenceCache.get(id)
 
-            if (encoded.isNotEmpty()) {
-                val bitmap = decoding(encoded)
+            if (localImageentity != null) {
+                val bitmap = decoding(localImageentity.encoded)
 
                 withContext(Dispatchers.Main) {
                     onComplete()
