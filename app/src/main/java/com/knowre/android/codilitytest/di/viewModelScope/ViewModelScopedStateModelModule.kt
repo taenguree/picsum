@@ -1,8 +1,16 @@
-package com.knowre.android.codilitytest.di.perRetainedActivity
+package com.knowre.android.codilitytest.di.viewModelScope
 
 import com.knowre.android.codilitytest.base.BaseStateModel
 import com.knowre.android.codilitytest.di.qualifier.PictureListIo
 import com.knowre.android.codilitytest.http.callState.CallStateListenerApi
+import com.knowre.android.codilitytest.screen.detail.DetailStateModel
+import com.knowre.android.codilitytest.screen.detail.dto.DetailAction
+import com.knowre.android.codilitytest.screen.detail.dto.DetailState
+import com.knowre.android.codilitytest.screen.detail.view.dto.DetailViewState
+import com.knowre.android.codilitytest.screen.main.MainStateModel
+import com.knowre.android.codilitytest.screen.main.dto.MainAction
+import com.knowre.android.codilitytest.screen.main.dto.MainState
+import com.knowre.android.codilitytest.screen.main.view.dto.MainViewState
 import com.knowre.android.codilitytest.widget.io.IoStateModel
 import com.knowre.android.codilitytest.widget.io.dto.IoAction
 import com.knowre.android.codilitytest.widget.io.dto.IoState
@@ -35,7 +43,15 @@ internal interface ViewModelScopedStateModelModule {
 
     @Binds
     @ViewModelScoped
+    fun provideMainViewModel(stateModel: MainStateModel): BaseStateModel<MainViewState, MainState, MainAction>
+
+    @Binds
+    @ViewModelScoped
     fun providePictureListStateModel(stateModel: PictureListStateModel): BaseStateModel<PictureListViewState, PictureListState, PictureListAction>
+
+    @Binds
+    @ViewModelScoped
+    fun provideDetailViewModel(stateModel: DetailStateModel): BaseStateModel<DetailViewState, DetailState, DetailAction>
 
     @Binds
     @ViewModelScoped

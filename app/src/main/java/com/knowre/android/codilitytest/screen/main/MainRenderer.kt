@@ -16,4 +16,5 @@ internal class MainRenderer : StateRenderer<MainViewState, MainAction>, ActionEm
     override fun setListener(listener: ActionListener<MainAction>) {
         this.listener = listener
     }
+
 }

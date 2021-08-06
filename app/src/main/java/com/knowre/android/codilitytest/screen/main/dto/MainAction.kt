@@ -3,6 +3,7 @@ package com.knowre.android.codilitytest.screen.main.dto
 import com.knowre.android.codilitytest.knowRedux.Action
 import com.knowre.android.codilitytest.knowRedux.ViewCallbackAction
 import com.knowre.android.codilitytest.knowRedux.ViewRenderAction
+import com.knowre.android.codilitytest.screen.detail.dto.DetailAction
 import com.knowre.android.codilitytest.screen.main.view.dto.MainViewCallbackAction
 import com.knowre.android.codilitytest.screen.main.view.dto.MainViewRenderAction
 

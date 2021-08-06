@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.di.perRetainedActivity
+package com.knowre.android.codilitytest.di.viewModelScope
 
 import com.knowre.android.codilitytest.http.coroutine.CoroutineRemote
 import com.knowre.android.codilitytest.http.coroutine.CoroutineRemoteApi

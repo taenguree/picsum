@@ -1,7 +1,6 @@
 package com.knowre.android.codilitytest.screen.main
 
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
-import com.knowre.android.codilitytest.http.coroutine.CoroutineRemoteApi
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
 import com.knowre.android.codilitytest.screen.main.dto.MainAction
 import com.knowre.android.codilitytest.screen.main.dto.MainState
