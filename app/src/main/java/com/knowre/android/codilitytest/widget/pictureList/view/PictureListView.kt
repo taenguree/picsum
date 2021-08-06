@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.databinding.ViewPictureListBinding
 import com.knowre.android.codilitytest.extensions.doOnPostLayout
+import com.knowre.android.codilitytest.extensions.toPx
 import com.knowre.android.codilitytest.widget.base.ViewCallbackListener
 import com.knowre.android.codilitytest.widget.base.Widget
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListCallbackAction
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListRenderAction
 import com.knowre.android.codilitytest.widget.pictureList.view.recycler.PictureListAdapter
 import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListViewState
+import com.knowre.android.codilitytest.widget.pictureList.view.recycler.GridMarginDecoration
 
 
 internal class PictureListView constructor(
@@ -26,6 +28,8 @@ internal class PictureListView constructor(
 
     companion object {
         const val COLUMN_COUNT = 2
+
+        val GRID_MARGIN_IN_PX = 4.toPx
     }
 
     val binding = ViewPictureListBinding.inflate(LayoutInflater.from(context), this, true)
@@ -38,7 +42,7 @@ internal class PictureListView constructor(
         initializeRecyclerView()
 
         doOnPostLayout {
-            listener?.onAction(PictureListCallbackAction.OnInitialSizeMeasured(it.width, it.height, horizontalMarginsSum = 0, verticalMarginsSum = 0))
+            listener?.onAction(PictureListCallbackAction.OnInitialSizeMeasured(it.width, it.height, horizontalMarginsSum = GRID_MARGIN_IN_PX * (COLUMN_COUNT + 1), verticalMarginsSum = 0))
         }
     }
 
@@ -57,6 +61,7 @@ internal class PictureListView constructor(
         with(binding.rvPictures) {
             layoutManager = StaggeredGridLayoutManager(COLUMN_COUNT, RecyclerView.VERTICAL)
             adapter       = pictureListAdapter
+            addItemDecoration(GridMarginDecoration(2, GRID_MARGIN_IN_PX))
         }
 
         binding.rvPictures.addOnScrollListener(object : RecyclerView.OnScrollListener() {

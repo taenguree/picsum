@@ -11,11 +11,11 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.knowre.android.codilitytest.R
+import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.di.qualifier.Database
 import com.knowre.android.codilitytest.helper.Base64Encoder
 import com.knowre.android.codilitytest.persistence.PersistenceApi
 import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
-import com.knowre.android.codilitytest.widget.singlePicture.state.ImageBinder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

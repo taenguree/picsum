@@ -27,7 +27,7 @@ internal class PictureListReducer : Reducer<PictureListState, PictureListAction>
             }
 
             is PictureListAction.Callback -> when (val callbackAction = action.action) {
-                is PictureListCallbackAction.OnInitialSizeMeasured -> state.copy(viewState = state.viewState.copy(width = callbackAction.width, height = callbackAction.height))
+                is PictureListCallbackAction.OnInitialSizeMeasured -> state.copy(viewState = state.viewState.copy(width = callbackAction.width, height = callbackAction.height, horizontalMarginSum = callbackAction.horizontalMarginsSum))
 
                 else -> state
             }
