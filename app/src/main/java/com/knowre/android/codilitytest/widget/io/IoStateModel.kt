@@ -28,6 +28,9 @@ internal open class IoStateModel @Inject constructor() : LifecycleAwareStateMode
     }
 
     override fun onRetryCallStarted(call: Call<*>, id: String?, throwable: Throwable, retryCount: Int) {
+        launch(Dispatchers.Main.immediate) {
+            dispatch(IoAction.Render(IoViewRenderAction.ShowRetryMessage()))
+        }
     }
 
     override fun onSucceed(call: Call<*>, id: String?) {
@@ -38,6 +41,7 @@ internal open class IoStateModel @Inject constructor() : LifecycleAwareStateMode
 
     override fun onFailure(call: Call<*>, id: String?, throwable: Throwable, retryCount: Int) {
         launch(Dispatchers.Main.immediate) {
+            dispatch(IoAction.Render(IoViewRenderAction.ShowIoFailMessage()))
             dispatch(IoAction.Render(IoViewRenderAction.HideLoading()))
         }
     }

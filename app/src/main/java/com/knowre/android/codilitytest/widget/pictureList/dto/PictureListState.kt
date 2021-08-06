@@ -7,6 +7,7 @@ import com.knowre.android.codilitytest.widget.pictureList.view.dto.PictureListVi
 
 internal data class PictureListState(
     override val viewState: PictureListViewState = PictureListViewState(),
+    val currentPage: Int? = null,
     val isNoMorePictureExist: Boolean = false
 
 ) : StateType, ViewStateAware<PictureListViewState>

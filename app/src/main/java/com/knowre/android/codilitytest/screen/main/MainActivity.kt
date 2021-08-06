@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import com.knowre.android.codilitytest.databinding.ActivityMainBinding
 import com.knowre.android.codilitytest.widget.io.IoRenderer
 import com.knowre.android.codilitytest.widget.pictureList.PictureListRenderer
-import com.knowre.android.codilitytest.widget.pictureList.view.PictureListIoView
+import com.knowre.android.codilitytest.widget.io.view.BasicIoView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,7 +24,7 @@ internal class MainActivity : AppCompatActivity() {
 
         viewModel.mainStateModel.setRenderer(MainRenderer())
         viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customPictureList))
-        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(PictureListIoView(bindings.customPictureList.binding.pbProgress)))
+        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(BasicIoView(bindings.customPictureList.binding.pbProgress, this)))
 
         viewModel.onCreate(savedInstanceState)
     }

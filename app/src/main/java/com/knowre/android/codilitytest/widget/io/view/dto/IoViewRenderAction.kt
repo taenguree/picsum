@@ -6,4 +6,6 @@ import com.knowre.android.codilitytest.widget.base.ViewAction
 internal sealed class IoViewRenderAction : ViewAction {
     class ShowLoading() : IoViewRenderAction()
     class HideLoading() : IoViewRenderAction()
+    class ShowRetryMessage() : IoViewRenderAction()
+    class ShowIoFailMessage() : IoViewRenderAction()
 }

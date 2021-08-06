@@ -14,6 +14,7 @@ internal class PictureListReducer : Reducer<PictureListState, PictureListAction>
         return when (action) {
             is PictureListAction.Render -> when (val renderAction = action.action) {
                 is PictureListRenderAction.AppendPictures -> state.copy(viewState = state.viewState.copy(pictures = state.viewState.pictures.swapOrAdd(renderAction.singlePictureStates) { old, new -> old.id == new.id }))
+                    .run { state.copy(currentPage = (state.currentPage ?: 0) + 1) }
                     .run {
                         if (renderAction.singlePictureStates.isEmpty()) {
                             this.copy(isNoMorePictureExist = true)

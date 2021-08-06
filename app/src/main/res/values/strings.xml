@@ -2,4 +2,6 @@
     <string name="app_name">Picsum</string>
 
     <string name="no_more_picture_exists">더 추가할 사진이 없습니다.</string>
+    <string name="retry_due_to_network_unstable">네트워크가 불안정해 재시도합니다.</string>
+    <string name="network_not_available">네트웍 오류로 데이터를 받아 올 수 없습니다. 앱을 종료 후 다시 시작해주세요.</string>
 </resources>

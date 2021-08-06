@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 internal class PictureListStateModel @Inject constructor(
     private val dataSource: PictureListDataSourceApi,
-    private val singlePictureViewStateMapper: SinglePictureViewStateMapper
+    private val singlePictureViewStateMapper: SinglePictureViewStateMapper,
+    private val imageBinderFactory: ImageBinderFactory
 
 ) : LifecycleAwareStateModel<PictureListViewState, PictureListState, PictureListAction>(
     initialState = PictureListState(),
@@ -29,13 +30,13 @@ internal class PictureListStateModel @Inject constructor(
         when (action) {
             is PictureListAction.Callback -> when (val callbackAction = action.action) {
                 is PictureListCallbackAction.OnInitialSizeMeasured -> {
-                    val viewStates = dataSource.fetchImageList().map { singlePictureViewStateMapper.transform(it, callbackAction.width, PictureListView.COLUMN_COUNT, dataSource.getImageBinder(getScope()!!)) }
+                    val viewStates = dataSource.fetchImageList(getState().currentPage ?:  1).map { singlePictureViewStateMapper.transform(it, callbackAction.width, PictureListView.COLUMN_COUNT, imageBinderFactory.getImageBinder(getScope()!!)) }
                     dispatch(PictureListAction.Render(PictureListRenderAction.AppendPictures(viewStates)))
                 }
 
                 is PictureListCallbackAction.OnAlmostScrolledToVeryBottom -> {
                     if (!state.isNoMorePictureExist) {
-                        val viewStates = dataSource.fetchNextPageImageList()?.map { singlePictureViewStateMapper.transform(it, state.viewState.width, PictureListView.COLUMN_COUNT, dataSource.getImageBinder(getScope()!!)) }
+                        val viewStates = dataSource.fetchNextPageImageList(getState().currentPage!!)?.map { singlePictureViewStateMapper.transform(it, state.viewState.width, PictureListView.COLUMN_COUNT, imageBinderFactory.getImageBinder(getScope()!!)) }
 
                         viewStates?.let {
                             dispatch(PictureListAction.Render(PictureListRenderAction.AppendPictures(viewStates)))
