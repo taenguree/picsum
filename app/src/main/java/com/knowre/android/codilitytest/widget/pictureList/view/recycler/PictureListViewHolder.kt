@@ -21,4 +21,5 @@ internal class PictureListViewHolder constructor(private val view: View, private
             return PictureListViewHolder(view, view.findViewById(R.id.custom_single_picture))
         }
     }
+
 }

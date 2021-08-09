@@ -5,6 +5,4 @@ import dagger.hilt.android.HiltAndroidApp
 
 
 @HiltAndroidApp
-internal class Picsum : Application() {
-
-}
+internal class Picsum : Application()
