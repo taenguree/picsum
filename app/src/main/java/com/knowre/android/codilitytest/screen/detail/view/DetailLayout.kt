@@ -24,6 +24,8 @@ internal class DetailLayout constructor(
 
     private var listener: ViewCallbackListener<DetailViewCallbackAction>? = null
 
+    private var state: DetailViewState? = null
+
     init {
         initializeListener()
 
@@ -33,6 +35,8 @@ internal class DetailLayout constructor(
     }
 
     override fun render(state: DetailViewState, action: DetailViewRenderAction) {
+        this.state = state
+
         when (action) {
             is DetailViewRenderAction.Render -> {
                 binding.bGrayScale.visibility = View.VISIBLE
@@ -40,6 +44,7 @@ internal class DetailLayout constructor(
 
                 action.state.setImage(
                     binding.ivPicture,
+                    { this.state!!.id },
                     action.state.id,
                     action.state.url,
                     false,
