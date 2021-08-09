@@ -8,12 +8,15 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.di.qualifier.Database
+import com.knowre.android.codilitytest.glide.GlideApp
 import com.knowre.android.codilitytest.helper.Base64Encoder
 import com.knowre.android.codilitytest.persistence.PersistenceApi
 import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
@@ -41,7 +44,7 @@ internal class ImageBinderFactory @Inject constructor(
             /** 이전 글라이드 요청이 있다면 취소 */
             Glide.with(view.context).clear(view)
 
-            val glideRequest = Glide.with(view.context)
+            val glideRequest = GlideApp.with(view.context)
 
             if (useCache) {
                 tryAsyncLoadImageFromLocalCache(scope, view, getIdFromView, id, decoding = { base64Encoder.decode(it) }) {
