@@ -36,6 +36,7 @@ internal class SinglePictureLayout constructor(
             is SinglePictureRenderAction.Render -> {
                 state.setImage(
                     binding.ivPicture,
+                    { this.state!!.id },
                     state.id,
                     state.url,
                     true,

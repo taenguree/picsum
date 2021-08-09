@@ -5,6 +5,7 @@ import android.widget.ImageView
 
 typealias ImageBinder = (
     view: ImageView,
+    getIdFromView: () -> Int,
     id: Int,
     url: String,
     useCache: Boolean,

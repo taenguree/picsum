@@ -12,5 +12,5 @@ internal data class DetailViewState(
     val requestedHeight: Int = -1,
     val isGrayScale: Boolean = false,
     val isBlur: Boolean = false,
-    val setImage: ImageBinder = { _, _, _, _, _, _, _, _ ->  }
+    val setImage: ImageBinder = { _, _, _, _, _, _, _, _, _ ->  }
 ) : ViewStateType

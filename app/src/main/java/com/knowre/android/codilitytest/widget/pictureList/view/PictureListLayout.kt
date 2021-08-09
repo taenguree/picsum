@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.knowre.android.codilitytest.R
@@ -54,7 +53,7 @@ internal class PictureListLayout constructor(
     override fun render(state: PictureListViewState, action: PictureListRenderAction) {
         when (action) {
             is PictureListRenderAction.AppendPictures            -> pictureListAdapter.addStates(action.singlePictureStates)
-            is PictureListRenderAction.ShowMorePictureExistToast -> Toast.makeText(context, resources.getString(R.string.no_more_picture_exists), Toast.LENGTH_SHORT).show()
+            is PictureListRenderAction.ShowNoMorePictureExistToast -> Toast.makeText(context, resources.getString(R.string.no_more_picture_exists), Toast.LENGTH_SHORT).show()
         }
     }
 
