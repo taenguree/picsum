@@ -69,7 +69,7 @@ internal abstract class BaseStateModel<VS : ViewStateType, S : ViewStateAware<VS
     }
 
     fun launch(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> Unit): Job? {
-        return scope!!.launch(context = context + exceptionHandler, block = block)
+        return scope?.launch(context = context + exceptionHandler, block = block)
     }
 
     fun getState() = store.get()

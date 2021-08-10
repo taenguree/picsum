@@ -1,7 +1,9 @@
 package com.knowre.android.codilitytest.screen.detail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.base.ImageBinder
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
 import com.knowre.android.codilitytest.http.api.ImageApi
@@ -13,13 +15,14 @@ import com.knowre.android.codilitytest.screen.detail.dto.DetailState
 import com.knowre.android.codilitytest.screen.detail.view.dto.DetailViewCallbackAction
 import com.knowre.android.codilitytest.screen.detail.view.dto.DetailViewRenderAction
 import com.knowre.android.codilitytest.screen.detail.view.dto.DetailViewState
-import com.knowre.android.codilitytest.widget.pictureList.ImageBinderFactory
+import com.knowre.android.codilitytest.glide.ImageBinderFactory
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
 internal class DetailStateModel @Inject constructor(
-    private val dataSource: DetailDataSourceApi,
-    private val imageBinderFactory: ImageBinderFactory
+    @ApplicationContext private val context: Context,
+                        private val dataSource: DetailDataSourceApi
 
 ) : LifecycleAwareStateModel<DetailViewState, DetailState, DetailAction>(
     initialState = DetailState(),
@@ -30,51 +33,97 @@ internal class DetailStateModel @Inject constructor(
     override fun onCreate(savedInstanceState: Bundle?, intent: Intent?) {
         super.onCreate(savedInstanceState, intent)
 
-        launch {
-            dispatch(DetailAction.Input.IntentData(intent!!.getSerializableExtra(DetailActivity.INTENT_EXTRA_NAME) as DetailIntentData))
-        }
+        launch { dispatch(DetailAction.Input.IntentData(intent!!.getSerializableExtra(DetailActivity.INTENT_EXTRA_NAME) as DetailIntentData)) }
     }
 
     override suspend fun onNext(state: DetailState, action: DetailAction) {
         super.onNext(state, action)
 
-        val imageBinder = imageBinderFactory.getImageBinder(getScope()!!)
-
         when(action) {
             is DetailAction.Callback -> when(val callbackAction = action.action) {
-                is DetailViewCallbackAction.OnInitialSizeMeasured -> dispatch(action(getState().intentData, callbackAction.width, isGrayScale = false, isBlur = false, imageBinder = imageBinder))
+                is DetailViewCallbackAction.OnInitialSizeMeasured -> {
+                    dispatch(
+                        DetailAction.Render(
+                            DetailViewRenderAction.Render(
+                                dataSource.fetchViewState(
+                                    id                  = getState().intentData.clickedPictureId,
+                                    url                 = getState().intentData.clickedPictureUrl,
+                                    author              = getState().intentData.author,
+                                    viewWidth           = callbackAction.width,
+                                    imageOriginalWidth  = getState().intentData.imageOriginalWidth,
+                                    imageOriginalHeight = getState().intentData.imageOriginalHeight,
+                                    isGrayScale         = false,
+                                    isBlur              = false,
+                                    scope               = getScope()!!
+                                )
+                            )
+                        )
+                    )
+                }
 
-                is DetailViewCallbackAction.OnGrayScaleClicked -> dispatch(action(getState().intentData, callbackAction.width, isGrayScale = true, isBlur = false, imageBinder = imageBinder))
+                is DetailViewCallbackAction.OnGrayScaleClicked -> {
+                    dispatch(
+                        DetailAction.Render(
+                            DetailViewRenderAction.Render(
+                                dataSource.fetchViewState(
+                                    id                  = getState().viewState.id,
+                                    url                 = getState().viewState.url,
+                                    author              = getState().viewState.author,
+                                    viewWidth           = callbackAction.width,
+                                    imageOriginalWidth  = getState().viewState.imageOriginalWidth,
+                                    imageOriginalHeight = getState().viewState.imageOriginalHeight,
+                                    isGrayScale         = true,
+                                    isBlur              = false,
+                                    scope               = getScope()!!
+                                )
+                            )
+                        )
+                    )
+                }
 
-                is DetailViewCallbackAction.OnBlurClicked -> dispatch(action(getState().intentData, callbackAction.width, isGrayScale = false, isBlur = true, imageBinder = imageBinder))
+                is DetailViewCallbackAction.OnBlurClicked -> {
+                    dispatch(
+                        DetailAction.Render(
+                            DetailViewRenderAction.Render(
+                                dataSource.fetchViewState(
+                                    id                  = getState().viewState.id,
+                                    url                 = getState().viewState.url,
+                                    author              = getState().viewState.author,
+                                    viewWidth           = callbackAction.width,
+                                    imageOriginalWidth  = getState().viewState.imageOriginalWidth,
+                                    imageOriginalHeight = getState().viewState.imageOriginalHeight,
+                                    isGrayScale         = false,
+                                    isBlur              = true,
+                                    scope               = getScope()!!
+                                )
+                            )
+                        )
+                    )
+                }
+
+                is DetailViewCallbackAction.OnNextClicked -> {
+                    val nextViewState = dataSource.fetchNextImageEntity(callbackAction.currentImageId, state.pictureViewWidth, getScope()!!)
+
+                    if (nextViewState == null) {
+                        dispatch(DetailAction.Render(DetailViewRenderAction.ShowNoMorePictureToast(message = context.getString(R.string.last_picture))))
+                    } else {
+                        dispatch(DetailAction.Render(DetailViewRenderAction.Render(nextViewState)))
+                    }
+                }
+
+                is DetailViewCallbackAction.OnPreviousClicked -> {
+                    val previousViewState = dataSource.fetchPreviousImageEntity(callbackAction.currentImageId, state.pictureViewWidth, getScope()!!)
+
+                    if (previousViewState == null) {
+                        dispatch(DetailAction.Render(DetailViewRenderAction.ShowNoMorePictureToast(message = context.getString(R.string.first_picture))))
+                    } else {
+                        dispatch(DetailAction.Render(DetailViewRenderAction.Render(previousViewState)))
+                    }
+                }
             }
 
             else -> Unit
         }
-    }
-
-    private fun action(intentData: DetailIntentData, viewWidth: Int, isGrayScale: Boolean, isBlur: Boolean, imageBinder: ImageBinder): DetailAction.Render {
-        val ratio           = intentData.imageOriginalWidth.toFloat() / intentData.imageOriginalHeight.toFloat()
-        val requestedHeight = (viewWidth/ratio).toInt()
-
-        val url = when {
-            isGrayScale -> intentData.clickedPictureUrl + ImageApi.GRAY_SCALE_SUFFIX
-            isBlur      -> intentData.clickedPictureUrl + ImageApi.BLUR_SUFFIX
-            else        -> intentData.clickedPictureUrl
-        }
-
-        return DetailAction.Render(DetailViewRenderAction.Render(
-            DetailViewState(
-                id              = intentData.clickedPictureId,
-                url             = url,
-                requestedWidth  = viewWidth,
-                requestedHeight = requestedHeight,
-                author          = intentData.author,
-                isGrayScale     = isGrayScale,
-                isBlur          = isBlur,
-                setImage        = imageBinder
-            )
-        ))
     }
 
 }

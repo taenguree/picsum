@@ -1,8 +1,8 @@
-package com.knowre.android.codilitytest.persistence.room.entity
+package com.knowre.android.codilitytest.store.persistence.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.knowre.android.codilitytest.persistence.room.IMAGE_CACHE_TABLE
+import com.knowre.android.codilitytest.store.persistence.room.IMAGE_CACHE_TABLE
 
 
 @Entity(tableName = IMAGE_CACHE_TABLE)

@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.widget.pictureList
+package com.knowre.android.codilitytest.glide
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -8,18 +8,15 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.knowre.android.codilitytest.R
 import com.knowre.android.codilitytest.base.ImageBinder
-import com.knowre.android.codilitytest.di.qualifier.Database
 import com.knowre.android.codilitytest.glide.GlideApp
 import com.knowre.android.codilitytest.helper.Base64Encoder
-import com.knowre.android.codilitytest.persistence.PersistenceApi
-import com.knowre.android.codilitytest.persistence.room.entity.LocalImageEntity
+import com.knowre.android.codilitytest.store.persistence.PersistenceStoreApi
+import com.knowre.android.codilitytest.store.persistence.room.entity.LocalImageEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,8 +27,8 @@ import javax.inject.Singleton
 
 @Singleton
 internal class ImageBinderFactory @Inject constructor(
-              private val base64Encoder: Base64Encoder,
-    @Database private val imagePersistenceCache: PersistenceApi<@JvmSuppressWildcards Int, LocalImageEntity>
+    private val base64Encoder: Base64Encoder,
+    private val imagePersistenceCache: PersistenceStoreApi<@JvmSuppressWildcards Int, LocalImageEntity>
 
 ) {
 

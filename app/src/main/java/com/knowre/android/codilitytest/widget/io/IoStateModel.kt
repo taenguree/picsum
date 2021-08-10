@@ -24,8 +24,7 @@ internal open class IoStateModel @Inject constructor() : LifecycleAwareStateMode
         }
     }
 
-    override fun onRetryingBackoffStarted(call: Call<*>, id: String?, throwable: Throwable, backOffDelay: Long, retryCount: Int) {
-    }
+    override fun onRetryingBackoffStarted(call: Call<*>, id: String?, throwable: Throwable, backOffDelay: Long, retryCount: Int) = Unit
 
     override fun onRetryCallStarted(call: Call<*>, id: String?, throwable: Throwable, retryCount: Int) {
         launch(Dispatchers.Main.immediate) {

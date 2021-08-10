@@ -30,7 +30,7 @@ internal class MainActivity : AppCompatActivity() {
         viewModel.mainStateModel.setNavigator(navigator)
 
         viewModel.pictureListStateModel.setRenderer(PictureListRenderer(bindings.customMain.binding.customPictureList))
-        viewModel.pictureListLoadIoModule.setRenderer(IoRenderer(BasicIoView(bindings.customMain.binding.customPictureList.binding.pbProgress, this)))
+        viewModel.ioStateModel.setRenderer(IoRenderer(BasicIoView(bindings.customMain.binding.customPictureList.binding.pbProgress, this)))
 
         viewModel.onCreate(savedInstanceState)
     }

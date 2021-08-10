@@ -4,9 +4,13 @@ import com.knowre.android.codilitytest.widget.base.ViewAction
 
 
 internal sealed class DetailViewCallbackAction : ViewAction {
-    class OnInitialSizeMeasured(val width: Int) : DetailViewCallbackAction()
+    data class OnInitialSizeMeasured(val width: Int) : DetailViewCallbackAction()
 
-    class OnGrayScaleClicked(val width: Int) : DetailViewCallbackAction()
+    data class OnGrayScaleClicked(val width: Int) : DetailViewCallbackAction()
 
-    class OnBlurClicked(val width: Int) : DetailViewCallbackAction()
+    data class OnBlurClicked(val width: Int) : DetailViewCallbackAction()
+
+    class OnPreviousClicked(val currentImageId: Int) : DetailViewCallbackAction()
+
+    class OnNextClicked(val currentImageId: Int) : DetailViewCallbackAction()
 }
