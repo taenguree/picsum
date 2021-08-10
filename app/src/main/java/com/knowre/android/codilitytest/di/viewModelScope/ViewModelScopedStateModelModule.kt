@@ -1,7 +1,6 @@
 package com.knowre.android.codilitytest.di.viewModelScope
 
 import com.knowre.android.codilitytest.base.BaseStateModel
-import com.knowre.android.codilitytest.di.qualifier.PictureListIo
 import com.knowre.android.codilitytest.http.callState.CallStateListenerApi
 import com.knowre.android.codilitytest.screen.detail.DetailStateModel
 import com.knowre.android.codilitytest.screen.detail.dto.DetailAction
@@ -23,7 +22,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Call
@@ -37,7 +35,7 @@ internal interface ViewModelScopedStateModelModule {
     object ProvideModule {
         @Provides
         @ViewModelScoped
-        fun provideCallStateListener(@PictureListIo ioStateModel: BaseStateModel<IoViewState, IoState, IoAction>): Collection<CallStateListenerApi<Call<*>>> {
+        fun provideCallStateListener(ioStateModel: BaseStateModel<IoViewState, IoState, IoAction>): Collection<CallStateListenerApi<Call<*>>> {
             return listOf(ioStateModel as IoStateModel)
         }
     }
@@ -56,6 +54,5 @@ internal interface ViewModelScopedStateModelModule {
 
     @Binds
     @ViewModelScoped
-    @PictureListIo
     fun providePictureListIoStateModel(stateModel: IoStateModel): BaseStateModel<IoViewState, IoState, IoAction>
 }

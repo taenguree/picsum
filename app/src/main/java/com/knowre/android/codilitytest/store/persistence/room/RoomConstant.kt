@@ -1,4 +1,4 @@
-package com.knowre.android.codilitytest.persistence.room
+package com.knowre.android.codilitytest.store.persistence.room
 
 
 const val DB_NAME = "picsum_data_base"

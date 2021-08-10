@@ -30,3 +30,24 @@ internal fun <T> List<T>.swapOrAdd(new: List<T>, matcher: (T, T) -> Boolean): Li
 
     return swapOrAdded
 }
+
+fun <T> List<T>.next(element: T): T? {
+    val index = this.indexOf(element)
+
+    return if (index == -1 || index >= this.size -1) {
+        null
+    } else {
+        this[index + 1]
+    }
+}
+
+
+fun <T> List<T>.previous(element: T): T? {
+    val index = this.indexOf(element)
+
+    return if (index == -1 || index == 0) {
+        null
+    } else {
+        this[index - 1]
+    }
+}

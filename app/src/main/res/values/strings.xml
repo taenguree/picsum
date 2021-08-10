@@ -5,6 +5,11 @@
     <string name="retry_due_to_network_unstable">네트워크가 불안정해 재시도합니다.</string>
     <string name="network_not_available">네트웍 오류로 데이터를 받아 올 수 없습니다. 앱을 종료 후 다시 시작해주세요.</string>
 
-    <string name="gray_scale">Gray scale</string>
-    <string name="blur">Blur</string>
+    <string name="previous_image">이전 사진</string>
+    <string name="next_image">다음 사진</string>
+    <string name="gray_scale">흑백</string>
+    <string name="blur">블러</string>
+
+    <string name="last_picture">마지막 사진입니다.</string>
+    <string name="first_picture">첫 사진입니다.</string>
 </resources>

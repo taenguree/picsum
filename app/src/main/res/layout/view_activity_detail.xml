@@ -24,10 +24,30 @@
         android:layout_marginBottom="40dp"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/b_gray_scale"
+        app:layout_constraintBottom_toTopOf="@+id/b_previous"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="author" />
+
+    <Button
+        android:id="@+id/b_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/previous_image"
+        app:layout_constraintBottom_toTopOf="@+id/b_gray_scale"
+        app:layout_constraintEnd_toEndOf="@+id/b_gray_scale"
+        app:layout_constraintStart_toStartOf="@+id/b_gray_scale" />
+
+    <Button
+        android:id="@+id/b_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/next_image"
+        app:layout_constraintBottom_toTopOf="@+id/b_blur"
+        app:layout_constraintEnd_toEndOf="@+id/b_blur"
+        app:layout_constraintStart_toStartOf="@+id/b_blur" />
 
     <Button
         android:id="@+id/b_gray_scale"
@@ -77,10 +97,10 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:visibility="invisible"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/iv_picture"
         app:layout_constraintEnd_toEndOf="@+id/iv_picture"
         app:layout_constraintStart_toStartOf="@+id/iv_picture"
-        app:layout_constraintTop_toTopOf="@+id/iv_picture" />
+        app:layout_constraintTop_toTopOf="@+id/iv_picture"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

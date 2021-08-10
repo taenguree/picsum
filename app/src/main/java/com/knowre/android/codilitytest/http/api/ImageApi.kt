@@ -1,5 +1,6 @@
 package com.knowre.android.codilitytest.http.api
 
+import com.knowre.android.codilitytest.base.PageNumber
 import com.knowre.android.codilitytest.entity.ImageEntity
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,5 +15,5 @@ internal interface ImageApi {
     }
 
     @GET("/v2/list")
-    fun getImageList(@Query("page") page: Int, @Query("limit") limit: Int): Call<List<ImageEntity>>
+    fun getImageList(@Query("page") pageNumber: PageNumber, @Query("limit") limit: Int): Call<List<ImageEntity>>
 }

@@ -14,3 +14,5 @@ typealias ImageBinder = (
     onStart: () -> Unit,
     onComplete:() -> Unit
 ) -> Unit
+
+typealias PageNumber = Int

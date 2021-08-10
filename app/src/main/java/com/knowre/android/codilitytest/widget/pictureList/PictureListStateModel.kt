@@ -1,6 +1,7 @@
 package com.knowre.android.codilitytest.widget.pictureList
 
 import com.knowre.android.codilitytest.base.LifecycleAwareStateModel
+import com.knowre.android.codilitytest.glide.ImageBinderFactory
 import com.knowre.android.codilitytest.knowRedux.LoggingMiddleware
 import com.knowre.android.codilitytest.widget.pictureList.dataSource.PictureListDataSourceApi
 import com.knowre.android.codilitytest.widget.pictureList.dto.PictureListAction
