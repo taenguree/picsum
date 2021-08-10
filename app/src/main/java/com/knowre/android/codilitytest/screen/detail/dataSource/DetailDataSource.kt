@@ -61,9 +61,19 @@ internal class DetailDataSource @Inject constructor(
     }
 
     override suspend fun fetchPreviousImageEntity(currentImageId: Int, viewWidth: Int, scope: CoroutineScope): DetailViewState? {
-        val pagedImageEntity = imageDataSource.getAll().first { it.entities.find { entity -> entity.id == currentImageId } != null }
+        val pagedImageEntities = imageDataSource.getAll()
 
-        return pagedImageEntity.entities.previous(pagedImageEntity.entities.first { it.id == currentImageId })?.run { getDetailViewState(viewWidth, imageBinderFactory.getImageBinder(scope)) }
+        val pagedImageEntity = pagedImageEntities.first { it.entities.find { entity -> entity.id == currentImageId } != null }
+
+        return (
+                pagedImageEntity.entities.previous(pagedImageEntity.entities.first { it.id == currentImageId }) ?: if (pagedImageEntity.pageNumber > 1) {
+                    /** pageNumber 는 1부터 시작하므로 1을 더 뺀다. */
+                    pagedImageEntities[pagedImageEntity.pageNumber - 1 - 1].entities.last()
+                } else {
+                    null
+                }
+        )
+            ?.run { getDetailViewState(viewWidth, imageBinderFactory.getImageBinder(scope)) }
     }
 
     private fun ImageEntity.getDetailViewState(viewWidth: Int, imageBinder: ImageBinder): DetailViewState {
